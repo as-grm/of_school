@@ -1,0 +1,7 @@
+Slurm HPC environment (backslash at the end breaks the line and shell waits for additional commands):
+  $> env --unset=LD_PRELOAD \
+  $> srun --mpi=pmix --nodes=2 --tasks-per-node=4 \
+  $> --partition=haswell --kill-on-bad-exit icoFoam -parallel
+
+Stand alone workstation:
+  $> mpirun -n 8 icoFoam -parallel 

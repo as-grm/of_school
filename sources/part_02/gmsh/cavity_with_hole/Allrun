@@ -1,0 +1,21 @@
+#!/bin/sh
+cd ${0%/*} || exit 1    # Run from this directory
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+path=$(pwd)
+
+# run GMSH mesher (!!!Important: export to msh2 format!!!)
+gmsh -3 -format msh2 -o $path/gmsh.msh $path/constant/geometry/gmsh.geo 
+
+# convert GMSH mesh format to OF mesh format
+gmshToFoam gmsh.msh
+
+# correct boundary types
+python correct_boundary.py
+
+# preview in paraview
+paraFoam -builtin
+
+#------------------------------------------------------------------------------

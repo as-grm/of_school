@@ -1,0 +1,63 @@
+ 
+1. generate sample file in case/system folder
+
+    /*--------------------------------*- C++ -*----------------------------------*\
+    =========                 |
+    \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+    \\    /   O peration     | Website:  https://openfoam.org
+        \\  /    A nd           | Version:  9
+        \\/     M anipulation  |
+    \*---------------------------------------------------------------------------*/
+
+    type            surfaces;
+    libs            ("libsampling.so");
+
+    surfaceFormat   raw;
+    //setFormat       raw;
+
+    //interpolationScheme cellPoint;
+    interpolationScheme cell;
+
+    surfaces
+    (    
+        foil
+        {
+            type         patch;
+            patches      ( "foilup" "foillow" );
+            interpolate  true;
+            // Optional: whether to leave as faces (=default) or triangulate
+            // triangulate  false;
+        }
+        
+        upper_foil
+        {
+            type         patch;
+            patches      ( "foilup" );
+            interpolate  true;
+            // Optional: whether to leave as faces (=default) or triangulate
+            // triangulate  false;
+        }
+        
+        lower_foil
+        {
+            type         patch;
+            patches      ( "foillow" );
+            interpolate  true;
+            // Optional: whether to leave as faces (=default) or triangulate
+            // triangulate  false;
+        }
+    );
+
+    fields          (p);
+    //fields          (mag(U) p);
+
+
+// ************************************************************************* //
+
+2. run cmd
+
+    $> simpleFoam -postProcess -func sample -latestTime (system/sample)
+    $> simpleFoam -postProcess -func forces -latestTime (system/forces)
+
+3. results
+https://www.openfoam.com/documentation/guides/latest/doc/verification-validation-naca0012-airfoil-2d.html

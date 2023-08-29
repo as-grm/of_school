@@ -1,0 +1,8 @@
+Mesh density:
+
+1. 0-15:
+    - set BL to Field[1].Size = 0.004;
+    
+2. 20:
+    - set BL to Field[1].Size = 0.005;
+    - set BB weight to w_bb_ib = 0.05;

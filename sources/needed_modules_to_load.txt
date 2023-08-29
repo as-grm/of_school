@@ -1,0 +1,26 @@
+* List available modules:
+    $> module avail openfoam
+    $> ml av openfoam (equvalent with upper command)
+    
+* For OpenFOAM to be running on HPC@ULFS we need to load this modules:
+    $> module load OpenFOAM/10-foss-2022a
+    $> ml OpenFOAM/10-foss-2022a (equvalent with upper command)
+    $> source $FOAM_BASH
+    
+* Create your own Python environment:
+    1. load module python:
+     $> ml av python (check target version) $> ml python-version
+     
+    2. Create new env:
+     $> python3 -m venv local
+     
+    3. Activate new env:
+     $> source local/bin/activate
+     
+    4. Install new packages (active env local):
+     $(local)> pip install numpy scipy sympy matplotlib gmsh (!! install gmsh if needed!!)
+
+* GMSH for mesh generator:
+    $> ml av gmsh
+    $> ml gmsh/4.11.1-foss-2022a
+

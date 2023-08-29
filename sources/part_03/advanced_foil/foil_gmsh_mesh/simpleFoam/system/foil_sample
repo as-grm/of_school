@@ -1,0 +1,51 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+
+type            surfaces;
+libs            ("libsampling.so");
+
+surfaceFormat   raw;
+//setFormat       raw;
+
+//interpolationScheme cellPoint;
+interpolationScheme cell;
+
+surfaces
+(    
+    foil
+    {
+        type         patch;
+        patches      ( "foil.*" );
+        interpolate  true;
+        // Optional: whether to leave as faces (=default) or triangulate
+        // triangulate  true;
+    }
+    
+    upper_foil
+    {
+        type         patch;
+        patches      ( "foilup" );
+        interpolate  true;
+        // Optional: whether to leave as faces (=default) or triangulate
+        // triangulate  false;
+    }
+    
+    lower_foil
+    {
+        type         patch;
+        patches      ( "foillow" );
+        interpolate  true;
+        // Optional: whether to leave as faces (=default) or triangulate
+        // triangulate  false;
+    }
+);
+
+fields          (p);
+
+
+// ************************************************************************* //

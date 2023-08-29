@@ -1,0 +1,5 @@
+1. Preview results
+  $> paraFoam
+  
+2. logs monitor (must include system/residual in controlDict)
+  $> foamMonitor -l -r 1 case/postProcessing/residuals/0/residuals.dat 

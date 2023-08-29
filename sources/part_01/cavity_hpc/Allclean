@@ -1,0 +1,27 @@
+module purge
+module load OpenFOAM/10-foss-2022a
+source $FOAM_BASH
+
+# Source tutorial run functions
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+
+keepCases="cavity"
+loseCases="cavityFine"
+
+for caseName in $keepCases
+do
+(
+    cd $caseName || exit
+    foamCleanTutorials
+)
+done
+
+for caseName in $loseCases
+do
+    rm -rf $caseName
+done
+
+rm -rf *~
+rm -rf slurm*
+
+#------------------------------------------------------------------------------

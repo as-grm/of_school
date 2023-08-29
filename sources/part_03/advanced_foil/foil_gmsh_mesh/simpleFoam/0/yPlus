@@ -1,0 +1,126 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  9
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       volScalarField;
+    location    "0";
+    object      yPlus;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 0 0 0 0 0];
+
+internalField   uniform 0;
+
+boundaryField
+{
+    foilup
+    {
+        type            calculated;
+        value           nonuniform List<scalar> 
+30
+(
+16.776
+13.3344
+9.92885
+13.8721
+14.0727
+14.2625
+14.4448
+14.6037
+14.759
+14.8986
+15.0296
+15.1706
+15.3304
+15.5314
+15.7445
+15.9429
+16.1217
+16.2906
+16.4565
+16.6194
+16.9141
+16.9801
+16.8554
+16.3117
+15.0273
+13.6303
+12.297
+12.9397
+12.9186
+10.2165
+)
+;
+    }
+    foillow
+    {
+        type            calculated;
+        value           nonuniform List<scalar> 
+30
+(
+15.0197
+15.0257
+7.17173
+4.48823
+7.46374
+10.1947
+12.0069
+13.1559
+13.8713
+14.3059
+14.5782
+14.7584
+14.8794
+14.9551
+14.9976
+15.0182
+15.0023
+14.9751
+14.9551
+14.9313
+14.8931
+14.8569
+14.8154
+14.7934
+14.7873
+14.7721
+14.7622
+14.7797
+14.9003
+15.56
+)
+;
+    }
+    outlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    bottom
+    {
+        type            symmetryPlane;
+    }
+    inlet
+    {
+        type            calculated;
+        value           uniform 0;
+    }
+    top
+    {
+        type            symmetryPlane;
+    }
+    defaultFaces
+    {
+        type            empty;
+    }
+}
+
+
+// ************************************************************************* //
