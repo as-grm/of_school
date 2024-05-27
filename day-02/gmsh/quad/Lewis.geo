@@ -15,9 +15,6 @@ Plane Surface(100) = {4};
 Physical Line(1000)={1,2,3,4};
 Physical Surface(100)={100};
 	
-//Merge "LewisField.bgm";
-//Background Mesh View[0];
-	
 Field[1] = MathEval;
 Field[1].F = "0.01*(1.0+30.*(y-x*x)*(y-x*x) + (1-x)*(1-x))";
 Background Field = 1;

@@ -1,0 +1,14 @@
+Running parametrized geometry for the foil calculations, with the following parameters:
+ -t : NACA 00XX foil thickness as number in the interval [0,1]
+ -N : number of divission point on a foil curve
+ -a : angle of attack in degrees
+
+1. Run geometry generator
+$> python3 exterior_flow_NACA_profile.py -t 0.12 -N 100 -a 5
+
+2. Run GMSH mesh generator
+$> gmsh -3 -format msh2 -o naca_profile.msh naca_profile.geo
+
+3. Convert gmsh file format to OpenFOAM mesh:
+$> gmshToFoam naca_profile.msh
+
