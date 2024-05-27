@@ -1,0 +1,13 @@
+ 
+1. generate sample file in case/system folder
+    - samples are: foil_sample, foil
+
+2. obtain latest time results:
+    $> runApplication reconstructPar -latestTime
+
+    $> foamPostProcess -solver $(getSolver) -func foil_sample -latestTime
+    $> foamPostProcess -solver $(getSolver) -func forces -latestTime
+    $> foamPostProcess -solver $(getSolver) -func yplus -latestTime
+
+3. results
+https://www.openfoam.com/documentation/guides/latest/doc/verification-validation-naca0012-airfoil-2d.html

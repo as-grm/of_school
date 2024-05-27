@@ -1,0 +1,222 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+convertToMeters	1;
+
+dh 0.1;      // domain height
+
+// Boundary layer mesh coefficients
+blDirection
+{
+	// number of cells
+	N 80;
+	// edge multiple grading scenario
+	sBL1C 10; sBL1N 60; sBL1R 10;
+	sBL2C 50; sBL2N 30; sBL2R 10;
+	sBL3C 40; sBL3N 10; sBL3R 1;
+	// edge grading line
+	edge ( ($sBL1C $sBL1N $sBL1R) ($sBL2C $sBL2N $sBL2R) ($sBL3C $sBL3N $sBL3R) );
+
+}
+
+// Foil profile geometry and inlet arc meshing
+foil
+{
+	N 40; // number of cells on uppor/lower foil part
+	S 25; // grading factor
+}
+
+// Inlet arc/boundary meshing
+inlet
+{
+	// N is equal to foil part
+	S 0.01; // grading factor
+}
+
+// back domain part meshing
+back
+{
+	N 60; // number of cells
+	S 10; // grading factor
+}
+
+// Foil profile is always horizontal where nose is at (0,0) and tail is at (1,0)
+vertices
+(
+	( 0	0	0 ) //	0 - Profile Nose point
+	( 1	0	0 ) //	1 - Profile Tail point
+	( 1	\VAR{y_tb}	0 ) //	2
+	( -\VAR{x_front}	0	0 ) //	3
+	( 0	0	$dh	) //	4
+	( 1	0	$dh	) //	5
+	( 1	\VAR{y_tb}	$dh ) //	6
+	( -\VAR{x_front}	0	$dh ) //	7
+	( \VAR{x_back}	\VAR{y_back} 0 ) //	8
+	( \VAR{x_back}	\VAR{y_tb}	0 ) //	9
+	( \VAR{x_back}	\VAR{y_back}	$dh ) //	10
+	( \VAR{x_back}	\VAR{y_tb}	$dh ) //	11
+	( 1	-\VAR{y_tb}	0 ) //	12
+	( 1	-\VAR{y_tb}	$dh ) //	13
+	( \VAR{x_back}	-\VAR{y_tb}	0 ) //	14
+	( \VAR{x_back}	-\VAR{y_tb}	$dh ) //	15
+	( 1	0	0 ) //	16
+	( 1	0	$dh ) //	17
+);
+
+blocks
+(
+	// block 0
+	hex	(0 1 2 3 4 5 6 7)
+	($foil/N $blDirection/N 1)
+	edgeGrading (
+		// direction 1
+		$foil/S $inlet/S $inlet/S $foil/S // direction 1
+		// direction 2
+		$blDirection/edge
+		$blDirection/edge
+		$blDirection/edge
+		$blDirection/edge
+		//direction 3
+		1 1 1 1
+	)
+
+	// block 1
+	hex	(4 17 13 7 0 16 12 3)
+	($foil/N $blDirection/N  1)
+	edgeGrading (
+		// direction 1
+		$foil/S $inlet/S $inlet/S $foil/S // direction 1
+		// direction 2
+		$blDirection/edge
+		$blDirection/edge
+		$blDirection/edge
+		$blDirection/edge
+		//direction 3
+		1 1 1 1                      // direction 3
+	)
+
+	// block 2
+	hex	(1 8 9 2 5 10 11 6)
+	($back/N $blDirection/N 1)
+	simpleGrading (
+		$back/S
+		$blDirection/edge
+		1
+	)
+
+	// block 3
+	hex	(17 10 15 13 16 8 14 12)
+	($back/N $blDirection/N 1)
+	simpleGrading (
+		$back/S
+		$blDirection/edge
+		1
+	)
+);
+
+edges
+(
+	arc 3 2	( -7.48528137423857	8.48528137423857 0 )
+	arc	7 6 ( -7.48528137423857	8.48528137423857 $dh )
+
+	spline 1 0
+	(
+\VAR{upperCurveRfront}
+	)
+
+	spline 5 4
+	(
+\VAR{upperCurveRback}
+	)
+
+	arc	3 12 ( -7.48528137423857 -8.48528137423857 0 )
+	arc	7 13 ( -7.48528137423857 -8.48528137423857 $dh )
+
+	spline 0 16
+	(
+\VAR{lowerCurveDfront}
+	)
+
+	spline 4 17
+	(
+\VAR{lowerCurveDback}
+	)
+);
+
+defaultPatch
+{
+	name frontAndBack;
+    type empty;
+}
+
+boundary
+(
+	inlet
+	{
+		type patch;    // patch type for patch 0
+		faces
+		(
+			( 2  3  7  6)
+			( 3 12 13  7)
+			(12 15 14 13)
+		);
+	}
+
+	outlet
+	{
+		type patch;
+		faces
+		(
+			( 9  2  6 11)
+			( 8 9 10 11)
+			(15 8 10 14)
+		);
+	}
+
+	foil
+	{
+		type wall;
+		faces
+		(
+			(0 1  5  4)
+			(0 4 17 16)
+		);
+	}
+
+	interface1
+	{
+		type patch;    // patch type for patch 0
+		faces
+		(
+			(1 8 10 5)  // block face in this patch
+		);
+	}
+
+	interface2
+	{
+		type patch;
+		faces
+		(
+			(16 17 10 8)
+		);
+	}
+);
+
+// to have a single interface due to double vertex 1/5 and 16/17
+mergePatchPairs
+(
+    ( interface1 interface2 )
+);
+// ************************************************************************* //

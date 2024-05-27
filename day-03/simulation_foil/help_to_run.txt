@@ -1,0 +1,10 @@
+1. Must prepare the case:
+    $> ./prepare_case.sh
+
+2. Run the case on HPC:
+    $> sbatch run_hpc.sh
+
+File run_hpc.sh runs the problem in parallel on a dedicated node or nodes. In OpenFOAM, parallel decomposition is done with command "decomposePar", with dictionary file in "system/decomposeParDict".
+
+IMPORTANT
+In run_hpc.sh must specify the number of jobs to run, and the same number must be in decomposeParDict file!
