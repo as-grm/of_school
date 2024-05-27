@@ -1,0 +1,239 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  11
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    format      ascii;
+    class       dictionary;
+    object      blockMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//convertToMeters 0.1;
+
+// define vertices coordinates; start with number 0
+// use jinja2 python lib to replace var tags with actual values
+vertices
+(
+    \VAR{v0}
+    \VAR{v1}
+    \VAR{v2}
+    \VAR{v3}
+    \VAR{v4}
+    \VAR{v5}
+    \VAR{v6}
+    \VAR{v7}
+    \VAR{v8}
+    \VAR{v9}
+    \VAR{v10}
+    \VAR{v11}
+    \VAR{v12}
+    \VAR{v13}
+    \VAR{v14}
+    \VAR{v15}
+    \VAR{v16}
+    \VAR{v17}
+    \VAR{v18}
+    \VAR{v19}
+    \VAR{v20}
+    \VAR{v21}
+    \VAR{v22}
+    \VAR{v23}
+    \VAR{v24}
+    \VAR{v25}
+    \VAR{v26}
+    \VAR{v27}
+    \VAR{v28}
+    \VAR{v29}
+    \VAR{v30}
+    \VAR{v31}
+    \VAR{v32}
+    \VAR{v33}
+    \VAR{v34}
+    \VAR{v35}
+    \VAR{v36}
+    \VAR{v37}
+    \VAR{v38}
+    \VAR{v39}
+    \VAR{v40}
+    \VAR{v41}
+    \VAR{v42}
+    \VAR{v43}
+    \VAR{v44}
+    \VAR{v45}
+    \VAR{v46}
+    \VAR{v47}
+    \VAR{v48}
+    \VAR{v49}
+    \VAR{v50}
+    \VAR{v51}
+    \VAR{v52}
+    \VAR{v53}
+    \VAR{v54}
+    \VAR{v55}
+    \VAR{v56}
+    \VAR{v57}
+    \VAR{v58}
+    \VAR{v59}
+    \VAR{v60}
+    \VAR{v61}
+    \VAR{v62}
+    \VAR{v63}
+);
+
+// Edges of foil boundary only, replace with spline
+//	spline A B
+//      ( 
+//        (x1 y1 z1) - interpolacijske točke
+//        (x2 y2 z2)
+//        ...
+//        (xn yn zn)
+//     )
+edges
+(
+    // inner circle
+    arc 12 13 45 (0 0 1) // 45 degrees, z-normal
+    arc 13 14 45 (0 0 1) // 45 degrees, z-normal
+    arc 14 15 45 (0 0 1) // 45 degrees, z-normal
+    arc 15 16 45 (0 0 1) // 45 degrees, z-normal
+    arc 16 17 45 (0 0 1) // 45 degrees, z-normal
+    arc 17 18 45 (0 0 1) // 45 degrees, z-normal
+    arc 18 19 45 (0 0 1) // 45 degrees, z-normal
+    arc 19 12 45 (0 0 1) // 45 degrees, z-normal
+    arc 44 45 45 (0 0 1) // 45 degrees, z-normal
+    arc 45 46 45 (0 0 1) // 45 degrees, z-normal
+    arc 46 47 45 (0 0 1) // 45 degrees, z-normal
+    arc 47 48 45 (0 0 1) // 45 degrees, z-normal
+    arc 48 49 45 (0 0 1) // 45 degrees, z-normal
+    arc 49 50 45 (0 0 1) // 45 degrees, z-normal
+    arc 50 51 45 (0 0 1) // 45 degrees, z-normal
+    arc 51 44 45 (0 0 1) // 45 degrees, z-normal
+
+    // outer circle
+    arc 11  6 45 (0 0 1) // 45 degrees, z-normal
+    arc  6  7 45 (0 0 1) // 45 degrees, z-normal
+    arc  7  8 45 (0 0 1) // 45 degrees, z-normal
+    arc  8 20 45 (0 0 1) // 45 degrees, z-normal
+    arc 20 25 45 (0 0 1) // 45 degrees, z-normal
+    arc 25 24 45 (0 0 1) // 45 degrees, z-normal
+    arc 24 23 45 (0 0 1) // 45 degrees, z-normal
+    arc 23 11 45 (0 0 1) // 45 degrees, z-normal
+    arc 43 38 45 (0 0 1) // 45 degrees, z-normal
+    arc 38 39 45 (0 0 1) // 45 degrees, z-normal
+    arc 39 40 45 (0 0 1) // 45 degrees, z-normal
+    arc 40 52 45 (0 0 1) // 45 degrees, z-normal
+    arc 52 57 45 (0 0 1) // 45 degrees, z-normal
+    arc 57 56 45 (0 0 1) // 45 degrees, z-normal
+    arc 56 55 45 (0 0 1) // 45 degrees, z-normal
+    arc 55 43 45 (0 0 1) // 45 degrees, z-normal
+);
+
+// define mesh blocks
+blocks
+(
+    hex ( 6  5  0  1 38 37 32 33) (\VAR{nd_front} \VAR{nd_tb} 1) simpleGrading (\VAR{s_front} \VAR{s_tb} 1) // cell #  1
+    hex (39 34 33 38  7  2  1  6) (\VAR{nd_tb} \VAR{nd_mid} 1) simpleGrading (\VAR{s_tb} \VAR{s_mid} 1) // cell #  2
+    hex ( 7  2  3  8 39 34 35 40) (\VAR{nd_tb} \VAR{nd_mid} 1) simpleGrading (\VAR{s_tb} \VAR{s_mid} 1) // cell #  3
+    hex (40 41 36 35  8  9  4  3) (\VAR{nd_back} \VAR{nd_tb} 1) simpleGrading (\VAR{s_back} \VAR{s_tb} 1) // cell #  4 - flip z
+    hex (11 10  5  6 43 42 37 38) (\VAR{nd_front} \VAR{nd_nose} 1) simpleGrading (\VAR{s_front} \VAR{s_nose} 1) // cell #  5
+    hex (12 11  6 13 44 43 38 45) (\VAR{nd_bl} \VAR{nd_nose} 1) simpleGrading (\VAR{s_bl} \VAR{s_nose} 1) // cell #  6i
+    hex (46 39 38 45 14  7  6 13) (\VAR{nd_bl} \VAR{nd_mid} 1) simpleGrading (\VAR{s_bl} \VAR{s_mid} 1) // cell #  7i
+    hex (14  7  8 15 46 39 40 47) (\VAR{nd_bl} \VAR{nd_mid} 1) simpleGrading (\VAR{s_bl} \VAR{s_mid} 1) // cell #  8i
+    hex (48 52 40 47 16 20  8 15) (\VAR{nd_bl} \VAR{nd_tail} 1) simpleGrading (\VAR{s_bl} \VAR{s_tail} 1) // cell #  9i - flip z
+    hex (52 53 41 40 20 21  9  8) (\VAR{nd_back} \VAR{nd_tail} 1) simpleGrading (\VAR{s_back} \VAR{s_tail} 1) // cell # 10 - flip z
+    hex (43 42 54 55 11 10 22 23) (\VAR{nd_front} \VAR{nd_nose} 1) simpleGrading (\VAR{s_front} \VAR{s_nose} 1) // cell # 11  - flip z
+    hex (44 43 55 51 12 11 23 19) (\VAR{nd_bl} \VAR{nd_nose} 1) simpleGrading (\VAR{s_bl} \VAR{s_nose} 1) // cell # 12i - flip z
+    hex (18 24 23 19 50 56 55 51) (\VAR{nd_bl} \VAR{nd_mid} 1) simpleGrading (\VAR{s_bl} \VAR{s_mid} 1) // cell # 13i
+    hex (50 56 57 49 18 24 25 17) (\VAR{nd_bl} \VAR{nd_mid} 1) simpleGrading (\VAR{s_bl} \VAR{s_mid} 1) // cell # 14i
+    hex (16 20 25 17 48 52 57 49) (\VAR{nd_bl} \VAR{nd_tail} 1) simpleGrading (\VAR{s_bl} \VAR{s_tail} 1) // cell # 15i
+    hex (20 21 26 25 52 53 58 57) (\VAR{nd_back} \VAR{nd_tail} 1) simpleGrading (\VAR{s_back} \VAR{s_tail} 1) // cell # 16
+    hex (55 54 59 60 23 22 27 28) (\VAR{nd_front} \VAR{nd_tb} 1) simpleGrading (\VAR{s_front} \VAR{s_tb} 1) // cell # 17 - flip z
+    hex (24 29 28 23 56 61 60 55) (\VAR{nd_tb} \VAR{nd_mid} 1) simpleGrading (\VAR{s_tb} \VAR{s_mid} 1) // cell # 18
+    hex (56 61 62 57 24 29 30 25) (\VAR{nd_tb} \VAR{nd_mid} 1) simpleGrading (\VAR{s_tb} \VAR{s_mid} 1) // cell # 19
+    hex (25 26 31 30 57 58 63 62) (\VAR{nd_back} \VAR{nd_tb} 1) simpleGrading (\VAR{s_back} \VAR{s_tb} 1) // cell # 20 - flip z
+);
+
+defaultPatch
+{
+    name frontAndBack;
+    type empty;
+}
+
+boundary
+(
+    inlet
+    {
+        type patch;
+        faces
+        (
+            ( 5  0 32 37)
+            (10  5 37 42)
+            (22 10 42 54)
+            (27 22 54 59)
+        );
+    }
+
+    outlet
+    {
+        type patch;
+        faces
+        (
+            ( 4  9 41 36)
+            ( 9 21 53 41)
+            (21 26 58 53)
+            (26 31 63 58)
+        );
+    }
+
+    top
+    {
+        type patch;
+        faces
+        (
+            (28 27 59 60)
+            (29 28 60 61)
+            (30 29 61 62)
+            (31 30 62 63)
+        );
+    }
+
+    bottom
+    {
+        type patch;
+        faces
+        (
+            (0 1 33 32)
+            (1 2 34 33)
+            (2 3 35 34)
+            (3 4 36 35)
+        );
+    }
+
+    upper_foil
+    {
+        type wall;
+        faces
+        (
+            (12 19 51 44)
+            (19 18 50 51)
+            (18 17 49 50)
+            (17 16 48 49)
+        );
+    }
+
+    lower_foil
+    {
+        type wall;
+        faces
+        (
+            (13 12 44 45)
+            (14 13 45 46)
+            (15 14 46 47)
+            (16 15 47 48)
+        );
+    }
+);

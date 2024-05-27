@@ -1,0 +1,5 @@
+1. Builtin ParaView
+  $> paraFoam -builtin
+  
+2. logs monitor
+  $> foamMonitor -l -r 1 case/postProcessing/residuals/0/residuals.dat (must include system/residual in controlDict)
