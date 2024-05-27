@@ -14,4 +14,4 @@
 	$> deactivate (will deactivate the env)
 
 4. Install new packages (active env local):
-        $(local)> pip install numpy scipy sympy matplotlib
+        $(local)> pip install numpy scipy sympy matplotlib gmsh
