@@ -14,4 +14,4 @@ OpenFOAM basics school in combination with an HPC environment. All links to rele
  
 ## OpenFOAM code
 
-The current version of sources works for OpenFOAM version 10, downloaded from [openfoam.org](https://openfoam.org).  
+The current version of sources works for OpenFOAM version 11, downloaded from [openfoam.org](https://openfoam.org).  
