@@ -1,7 +1,6 @@
 import os
 import math as mat
 import numpy as np
-
 import jinja2
 
 # Tell jinja what to look for in the template
@@ -124,7 +123,10 @@ def replace_vars(fn_template, fn_mesh, database):
     f = open(fn_mesh, 'w', encoding='utf-8')
     f.write(document)
 
-# Main part
+
+# ********************
+# *** Main program ***
+# ********************
 
 # geometry parameters
 R1 = 1 # Inner radius
@@ -133,10 +135,9 @@ k1 = 3 # top-bottom scaling of R2
 k2 = 3 # front scaling of R2
 k3 = 10 # back scaling of R2
 
-# mesh parameters
+# mesh parameters for coars or fine mesh
 mesh_type = 'coarse'
 #mesh_type = 'fine'
-# Scale factor or grading is acalculateda as a ratio between the "first cell size"/"last cell size"
 
 # coarse mesh
 if mesh_type == 'coarse':
