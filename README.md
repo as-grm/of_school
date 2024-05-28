@@ -5,6 +5,23 @@
 - **Author:** Aleksander Sandro GRM (aleksander.grm@fpp.uni-lj.si)
 
 ---
+## Content
+
+**Day 1**
+ - Introduction to PDEs, FVM (Finite Volume Method), OpenFOAM structure
+ - Run simple cavitiy example
+
+**Day 2**
+ - Meshing in OpenFOAM: [Block Mesh](https://doc.cfd.direct/openfoam/user-guide-v11/blockmesh), [GMSH](https://gmsh.info/)
+ - Show how to use blockMesh
+ - Show how to use GMSH
+ - Demonstrate basic examples
+
+**Day 3**
+ - Advanced use of OpenFOAM
+ - Demonstrate foil case
+
+---
 ## Introduction
 
 OpenFOAM basics school in combination with an HPC environment. All links to relevant literature are accessible through the file
