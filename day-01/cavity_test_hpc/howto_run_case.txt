@@ -1,0 +1,10 @@
+Instructions how to run the case on HPC system
+
+1. Clean old simulation data: ./Allclean (or bash ./Allclean)
+2. Prepare the mesh: blockMesh , checkMesh
+3. Run on hpc: sbatch run_hpc.sh
+4. Chceck residuals: foamMonitor -l postprocessing/residuals/0/residuals.dat
+5. Reconstruct paralel results: reconstructPar
+6. Preview results: parafoam -builtin
+
+ 
