@@ -40,10 +40,10 @@ dragDir         (1 0 0);
 pitchAxis       (0 0 1);
 
 // Freestream velocity magnitude [m/s]
-magUInf         60;
+magUInf         10;
 
 // Free stream density [kg/m3]
-rhoInf         1.2;
+rhoInf         1000;
 
 // Reference length [m]
 lRef            1;

@@ -20,7 +20,7 @@ surfaces
     foil
     {
         type         patch;
-        patches      ( "foilup" );
+        patches      ( "foil" );
         interpolate  true;
         // Optional: whether to leave as faces (=default) or triangulate
         triangulate  true;
