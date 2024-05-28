@@ -1,0 +1,32 @@
+********************************
+*** OpenFOAM most used tools ***
+********************************
+ 
+-> Set OpenFOAM environment:
+        $> ml av openfoam (check target version)
+        $> ml OpenFOAM
+        $> source $FOAM_BASH
+
+-> Show residuals:
+        $> foamMonitor -l -r 1 postProcessing/residuals/0/residuals.dat
+		switch:
+			-l: log y axis
+			-r: refersh in seconds (-r 1: refers each second) 
+
+-> Post processing sample regions:
+
+	1. generate sample file in case/system folder
+    	- samples are: foil_sample, foil
+
+	2. obtain latest time results:
+    	$> runApplication reconstructPar -latestTime
+
+    	$> foamPostProcess -solver $(getSolver) -func foil_sample -latestTime
+    	$> foamPostProcess -solver $(getSolver) -func forces -latestTime
+    	$> foamPostProcess -solver $(getSolver) -func yplus -latestTime
+
+	3. use plot_pressure.py to visualise pressure distribution from foil_sample
+
+	4. compare results
+		https://www.openfoam.com/documentation/guides/latest/doc/verification-validation-naca0012-airfoil-2d.html
+
