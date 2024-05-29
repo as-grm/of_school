@@ -21,6 +21,10 @@
  - Advanced use of OpenFOAM
  - Demonstrate foil case
 
+**Tools an Literature**
+ - description of standard tools: OpenFOAM, Python and HPC
+ - relevant literature for the course
+
 ---
 ## Introduction
 
