@@ -3,15 +3,16 @@
 ************************************************************
  
 1. Load python module:
-        $> ml av python (check target version)
-        $> ml Python
+	$> ml av python (check target version)
+	$> ml Python
 
 2. Create new python environment:
-        $> python3 -m venv local
+	$> python3 -m venv local
 
 3. Activate new environment:
-        $> source local/bin/activate
-	    $> deactivate (will deactivate the env)
+	$> source local/bin/activate
+	$> deactivate (will deactivate the env)
 
 4. Install new packages (active env local):
-        $(local)> pip install numpy scipy matplotlib gmsh
+	$(local)> pip install numpy matplotlib gmsh jinja2
+
