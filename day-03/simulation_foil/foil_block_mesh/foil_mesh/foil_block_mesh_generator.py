@@ -113,11 +113,6 @@ def replace_vars(fn_template, fn_mesh, database):
 # *** Main part ***
 # *****************
 
-# NACA profile 
-t = 0.1 # thickness
-N = 100 # side division points
-fi = 5  # angle of attack
-
 # domain geometry
 front_x = 11      # fron distance from nose    
 top_bottom_y = 12 # top bottom distance from centerline
@@ -130,7 +125,7 @@ domain_dict = domain_dict(front_x, top_bottom_y, back_x, fi)
 
 # join dictionaries and replace variables with values
 bm_dict = {**profile_dict, **domain_dict}
-replace_vars('blockmeshdict_template', 'system/blockMeshDict', bm_dict)
+replace_vars('constant/geometry/blockmeshdict_template', 'system/blockMeshDict', bm_dict)
 
 
 # Freestream Velocity with angle

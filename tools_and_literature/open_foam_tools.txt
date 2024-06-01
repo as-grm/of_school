@@ -18,6 +18,9 @@
     1. generate sample file in case/system folder
         - samples are: foil_sample, foil
 
+    2. Include OF run functions:
+        $> source $WM_PROJECT_DIR/bin/tools/RunFunctions
+
     2. obtain latest time results:
         $> runApplication reconstructPar -latestTime
 
