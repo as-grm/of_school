@@ -13,13 +13,20 @@
 
 **Day 2**
  - Meshing in OpenFOAM: [Block Mesh](https://doc.cfd.direct/openfoam/user-guide-v11/blockmesh), [GMSH](https://gmsh.info/)
- - Show how to use blockMesh
- - Show how to use GMSH
- - Demonstrate basic examples
+ - Show how to use blockMesh: work on simple examples
+ - Show how to use GMSH: work on simple examples
+ - Introduction to *Turbulent flow*
+   - Basics of turbulent flow
+   - Computation of turbulent mesh resolution
+   - Advanced example: working with $k-\omega$ SST turbulent model
 
 **Day 3**
  - Advanced use of OpenFOAM
- - Demonstrate foil case
+   - time dependant boundary condition
+   - post processing tools
+ - Demonstration of advanced foil case
+   - BlockMesh and GMS case
+   - turbulent flow: steady and transient solution 
 
 **Tools an Literature**
  - description of standard tools: OpenFOAM, Python and HPC
