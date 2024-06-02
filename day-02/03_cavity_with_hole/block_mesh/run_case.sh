@@ -1,19 +1,23 @@
 #!/bin/bash
 
-# run it with flags:
-#$> run_case.sh -c {transient, steady} -a {angle in degs} -p {not, local, hpc}
-
 path=$(pwd)
 
 usage()
 {
-    echo "usage: run_case.sh -p {not, local, hpc} -u {real number} -r {real number} -y {real number}"
+    echo "usage: run_case.sh  -c {steady, transient} -p {not, local, hpc} -u {real number} -r {real number} -y {real number}"
 }
 
 no_args="true"
-while getopts p:u:r:y: flag
+while getopts c:p:u:r:y: flag
 do
     case "${flag}" in
+        c)
+            case=${OPTARG}
+            if [ $case != "steady" ] &&  [ $case != "transient" ]; then
+                echo "Case can be only steady or transient!"
+                exit 1
+            fi
+            ;;
         p)
             parallel=${OPTARG}
             if [ $parallel != "local" ] &&  [ $parallel != "hpc" ] &&  [ $parallel != "not" ]; then
@@ -41,10 +45,10 @@ do
             ;;
         y)
             yplus=${OPTARG}
-            cmp_1=$(echo "$yplus <= 100" | bc) # use bc to compare float numbers
+            cmp_1=$(echo "$yplus <= 500" | bc) # use bc to compare float numbers
             cmp_2=$(echo "$yplus > 0" | bc)
             if [[ $cmp_1 -ne 1 ]] ||  [[ $cmp_2 -ne 1 ]]; then
-                echo "Y+ should be in interval [0,100]!"
+                echo "Y+ should be in interval [0,500]!"
                 exit 1
             fi
             ;;
@@ -59,14 +63,13 @@ done
 [[ "$no_args" == "true" ]] && { usage; exit 1; }
 shift $((OPTIND-1))
 
-if [ -z "${parallel}" ] || [ -z "${vel}" ] || [ -z "${radius}" ] || [ -z "${yplus}" ]; then
+if [ -z "${case}" ] || [ -z "${parallel}" ] || [ -z "${vel}" ] || [ -z "${radius}" ] || [ -z "${yplus}" ]; then
     usage
     exit 1
 fi
 
 echo
-case="steady";
-echo "Running STEADY case:";
+echo "Running case: **$case**";
 echo
 
 # Clean all old simulations

@@ -1,0 +1,84 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  5                                     |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "constant";
+    object      turbulenceProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+//simulationType laminar;
+simulationType RAS;
+
+RAS
+{
+    RASModel        kOmegaSSTSAS;
+    turbulence      on;
+    printCoeffs     on;
+
+    /*
+    The delta field in kOmegaSSTSAS is used equally to LES. SAS (Scale Adaptive Simulation) uses spatial
+    averaging related to cell size, such as LES does. In OpenFOAM you can apply the SSTSAS-Model just
+    like the usual SST-Model.
+
+    For delta field you might define cubeRootVol, which only takes the cubic root of cell expansion in every
+    spatial direction. But if the aspect ratios of your cells are not allways equal to 1 (especially at near wall regions),
+    you might use the vanDriest damping function to calculate your spatial averaging width in combination with cubeRootVol.
+    */
+
+//  delta           cubeRootVol;
+//  delta           smooth;
+    delta           vanDriest;
+
+    cubeRootVolCoeffs
+    {
+        deltaCoeff      1;
+    }
+
+    smoothCoeffs
+    {
+        delta           cubeRootVol;
+        cubeRootVolCoeffs
+        {
+            deltaCoeff      1;
+        }
+
+        maxDeltaRatio   1.1;
+    }
+
+    vanDriestCoeffs
+    {
+        delta           cubeRootVol;
+        cubeRootVolCoeffs
+        {
+            deltaCoeff      1;
+        }
+
+        smoothCoeffs
+        {
+            delta           cubeRootVol;
+            cubeRootVolCoeffs
+            {
+                deltaCoeff      1;
+            }
+
+            maxDeltaRatio   1.1;
+        }
+
+        Aplus           26;
+        Cdelta          0.158;
+    }
+
+
+
+}
+
+// ************************************************************************* //

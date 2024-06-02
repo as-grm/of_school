@@ -154,7 +154,7 @@ def get_OF_grading(bl_H, bl_sr, bl_hN, bl_N, L, h_last, N):
     return str
 
 # set the OF output string for BL grading
-def get_OF_grading_string(rho, mu, U, L, yPlus, bl_sf, R):
+def get_OF_grading_string(rho, mu, U, L, yPlus, bl_sf, R, R2):
 
     # BL mesh data calculation
     [Re, bl_h1] = wall_distance(rho, mu, U, L, yPlus)
@@ -162,11 +162,14 @@ def get_OF_grading_string(rho, mu, U, L, yPlus, bl_sf, R):
     # last layer height and total height of the BL layer
     [bl_hN, bl_H, bl_N] = get_BL_total_height(bl_h1, bl_sf, bl_N0, R)
 
+    # find number of cells in second part of the block (above the BL layer)
+    sf2 = 1.1
+    N2 = mat.ceil(1 + mat.log(1 - (R2-R)/bl_hN*(1 - sf2))/mat.log(sf2))
 
     # get OF multi grading for boundary layer direction
-    N_side = 2*bl_N     # numeber of cells for block in BL direction
+    N_side = bl_N + N2     # numeber of cells for block in BL direction
     bl_sr = bl_hN/bl_h1 # scaling factor in BL wall zone
-    bl_g_str = get_OF_grading(bl_H, bl_sr, bl_hN, bl_N, L, 0.1*R, N_side)
+    bl_g_str = get_OF_grading(bl_H, bl_sr, bl_hN, bl_N, R2-R, 0.1*R, N_side)
 
     return [delta, H_calculated, bl_N0, Re, bl_sf, bl_N, bl_h1, bl_hN, bl_H, N_side, bl_g_str]
 
@@ -222,7 +225,7 @@ def replace_vars(fn_template, fn_mesh, database):
 def main(argv):
 
     try:
-        opts, args = getopt.getopt(argv,'U:R:Y:',['quality='])
+        opts, args = getopt.getopt(argv, 'U:R:Y:', ['velocity=', 'radius=', 'yPlus='])
         if len(opts) < 3:
             print('USAGE: cylinder_block_mesh_generator.py  -U <velocity in [m/s]> -R <cylinder radius in [m]> -Y <Y+ parameter>')
             exit(0)
@@ -233,8 +236,6 @@ def main(argv):
         if opt == '-h': # help block
             print('USAGE: cylinder_block_mesh_generator.py -U <velocity in [m/s]> -R <cylinder radius in [m]> -Y <Y+ parameter>')
             sys.exit()
-        elif opt in ("-q", "--quality"):
-            mesh_quality = arg
         elif opt in ('-U', '--velocity'):
             inp_U = float(arg)
         elif opt in ('-R', '--radius'):
@@ -242,25 +243,25 @@ def main(argv):
         elif opt in ('-Y', '--yPlus'):
             inp_yP = float(arg)
 
-     # BL calculation data
-    rho = 1000  # density [kg/m3]
-    mu = 1e-3   # dynamic viscosity [Pa s]
-    U = inp_U       # freestream velocity [m/s]
-    L = inp_R       # length scale in flow [m]; length of surface
-    yPlus = inp_yP  # desidered y+
-
-    # BL mesh data calculation
+    # BL calculation data
+    rho = 1000     # density [kg/m3]
+    mu = 1e-3      # dynamic viscosity [Pa s]
+    U = inp_U      # freestream velocity [m/s]
+    L = inp_R      # length scale in flow [m]; length of surface
+    yPlus = inp_yP # desidered y+
     bl_sf = 1.2
-    [Re, bl_h1] = wall_distance(rho, mu, U, L, yPlus)
-    [bl_N0, delta, H_calculated] = number_of_layers(bl_h1, bl_sf, Re, L) # number of layers, BL delta, mesh delta
 
-
-    print()
+    # geometry parameters
+    R  = L   # Inner radius
+    R2 = 4*L # Outer radius
+    k1 = 3   # top-bottom scaling of R2
+    k2 = 3   # front scaling of R2
+    k3 = 10  # back scaling of R2
 
     # OF block mesh grading string and BL calculated data
-    bl_sf = 1.2
-    [delta, H_calculated, bl_N0, Re, bl_sf, bl_N, bl_h1, bl_hN, bl_H, N_side, bl_g_str] = get_OF_grading_string(rho, mu, U, L, yPlus, bl_sf, L)
+    [delta, H_calculated, bl_N0, Re, bl_sf, bl_N, bl_h1, bl_hN, bl_H, N_side, bl_g_str] = get_OF_grading_string(rho, mu, U, L, yPlus, bl_sf, R, R2)
 
+    print()
     print('*************************************************')
     print('*** BlockMesh geometry generator - calculated ***')
     print('*************************************************')
@@ -286,30 +287,23 @@ def main(argv):
     print()
 
     # number of divions cels
-    nd_bl = N_side     # boundary layer direction
+    nd_bl = N_side # boundary layer direction
     nd_nose = 10   # from tip to mid
     nd_tail = 10   # from tail to mid
     nd_mid = 10    # middle foil section
     nd_front = 20  # front part, form nose to inlet
-    nd_back = 40  # back part , from tail to outlet
+    nd_back = 40   # back part , from tail to outlet
     nd_tb = 20     # top-bottom part, from mid to TB
 
     # scaling factors
-    scale_bl = bl_g_str   # scale factor in BL
-    scale_nose = 1   # scale factor for nose part
-    scale_tail = 1   # scale fctor for tail part
-    scale_mid = 1    # scale factor for mid part
-    scale_front = 2  # scale factor of front part
-    scale_back = 5   # scale factor of back part
-    scale_tb = 4     # scale factor of top-bottom direction
+    scale_bl = bl_g_str # scale factor in BL
+    scale_nose = 1      # scale factor for nose part
+    scale_tail = 1      # scale fctor for tail part
+    scale_mid = 1       # scale factor for mid part
+    scale_front = 2     # scale factor of front part
+    scale_back = 5      # scale factor of back part
+    scale_tb = 4        # scale factor of top-bottom direction
 
-
-    # geometry parameters
-    R  = L  # Inner radius
-    R2 = 4*L  # Outer radius
-    k1 = 3  # top-bottom scaling of R2
-    k2 = 3  # front scaling of R2
-    k3 = 10 # back scaling of R2
 
     # get dictionaroes for variables
     vertices_dict = get_vertex_oordinates(R,R2,k1,k2,k3)

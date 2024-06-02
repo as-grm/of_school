@@ -73,8 +73,8 @@ def geometry_dict(R):
     geometry_dict['R'] = '{:.2f}'.format(R)
     geometry_dict['tb1_y1'] = '{:.2f}'.format(15*R)
     geometry_dict['tb1_y2'] = '{:.2f}'.format(15*R)
-    geometry_dict['fr1_x'] = '{:.2f}'.format(5*R)
-    geometry_dict['ba1_x'] = '{:.2f}'.format(40*R)
+    geometry_dict['fr1_x'] = '{:.2f}'.format(10*R)
+    geometry_dict['ba1_x'] = '{:.2f}'.format(50*R)
     geometry_dict['tb2_y1'] = '{:.2f}'.format(2*R)
     geometry_dict['tb2_y2'] = '{:.2f}'.format(2*R)
     geometry_dict['fr2_x'] = '{:.2f}'.format(2*R)
@@ -177,7 +177,8 @@ def main(argv):
     bl_dict = boundary_layer_dict(bl_h1, bl_H, bl_sf)
 
     # geometry grading dictionary
-    g2_fr = 40*bl_hN
+    # g2_fr = 40*bl_hN # kw-SST
+    g2_fr = 10*bl_hN # kw-SST-SAS
     g2_ba = 5*g2_fr
     g1_fr = 5*g2_fr
     g1_ba = 2*g1_fr
