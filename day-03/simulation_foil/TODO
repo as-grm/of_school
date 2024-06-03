@@ -1,0 +1,9 @@
+1. Mesh update: optimize mesh design based on y+ parameter for near wall layer thickness
+2. PostProcess: 
+  - review foil sample points access;
+  - create python points search for closed loop
+  - update python plot for Cl and Cd with respect to angle of attack
+3. Add into presentation:
+  - NACA00XX foil design description
+  - calculation of force coefficients
+  - effect on mesh generation and turbulent flow
