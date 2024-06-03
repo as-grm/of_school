@@ -17,3 +17,7 @@ around the **NACA00XX** foils.
      - $C_\text{L}$: lift coefficient
      - $C_\text{D}$: drag coefficient
      - $C_\text{m}$: pitch moment coefficient
+4. Different initial and boundary conditions
+   - classical conditions
+   - free stream conditions
+   - time dependant conditions
