@@ -19,44 +19,75 @@ solvers
     p
     {
         solver          GAMG;
-        tolerance       1e-07;
-        relTol          0.1;
+        tolerance       1e-8;
+        relTol          0.05;
         smoother        GaussSeidel;
+        nCellsInCoarsestLevel 20;
     }
 
-    "(U|k|omega|delta)"
+    pFinal
+    {
+        $p;
+        relTol          0;
+    }
+
+    pcorr
+    {
+        $p;
+        tolerance       1e-3;
+        relTol          0;
+    }
+
+    "U.*"
     {
         solver          smoothSolver;
         smoother        GaussSeidel;
-        tolerance       1e-08;
+        nSweeps         2;
+        tolerance       1e-07;
+        relTol          0.1;
+    }
+
+    "k.*"
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        nSweeps         2;
+        tolerance       1e-7;
+        relTol          0.1;
+    }
+
+    "omega.*"
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        nSweeps         2;
+        tolerance       1e-7;
+        relTol          0.1;
+    }
+
+    "delta.*"
+    {
+        solver          smoothSolver;
+        smoother        GaussSeidel;
+        nSweeps         2;
+        tolerance       1e-7;
         relTol          0.1;
     }
 }
 
 PIMPLE
 {
-    correctPhi          yes;
-    correctMeshPhi      yes;
-    nOuterCorrectors    4;
-    nCorrectors         1;
-    nNonOrthogonalCorrectors 2;
-}
-
-potentialFlow
-{
-    nNonOrthogonalCorrectors 10;
+    nOuterCorrectors 1;
+    nCorrectors     2;
+    nNonOrthogonalCorrectors 0;
 }
 
 relaxationFactors
 {
-    p               0.3;
-    U               0.5;
+    equations
+    {
+        ".*"        1;
+    }
 }
-
-cache
-{
-    grad(U);
-}
-
 
 // ************************************************************************* //
