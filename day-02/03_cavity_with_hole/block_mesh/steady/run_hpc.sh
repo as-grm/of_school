@@ -10,7 +10,7 @@ module load OpenFOAM
 source $FOAM_BASH
 
 # run parallel
-echo "Start $(getApplication) in parallel. Log is written in case/log.$(getApplication)!"
-srun --mpi=pmix foamRun -parallel > log.foamRun
+echo "Start foamRun in parallel. Log is written in case/slurm-ID.log!"
+srun --mpi=pmix foamRun -parallel
 
-# Check the running process with: tail -f case/log.$(getApplication)
+# Check the running process with: tail -f case/slurm-ID.log
