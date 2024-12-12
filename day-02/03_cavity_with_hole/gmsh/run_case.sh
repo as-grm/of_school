@@ -77,6 +77,9 @@ source $FOAM_BASH
 # Source tutorial run functions
 source $WM_PROJECT_DIR/bin/tools/RunFunctions
 
+# Source the local Python env for GMSH to work
+source ../../../../local/bin/activate
+
 
 echo
 echo "Running case: **$case**";

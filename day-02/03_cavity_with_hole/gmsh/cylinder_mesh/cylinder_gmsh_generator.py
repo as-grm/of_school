@@ -5,7 +5,7 @@ import numpy as np
 
 import jinja2
 
-# Tell jinja what to look for in the template
+# Tell Jinja what to look for in the template
 blockmesh_jinja_env = jinja2.Environment(
     variable_start_string=r"\VAR{",
     variable_end_string=r"}",
@@ -16,7 +16,7 @@ blockmesh_jinja_env = jinja2.Environment(
 
 # *** Generate data for boundary layer grading for turbulent model ***
 
-def wall_distance(rho, mu, U, L, yPlus): # Calculation of the size for the size of first layer, based on Y+
+def wall_distance(rho, mu, U, L, yPlus): # Calculation of the size for the size of the first layer, based on Y+
 
     Re = rho * U * L / mu
     Cf = (2 * mat.log10(Re) - 0.65)**(-2.3)
@@ -27,13 +27,13 @@ def wall_distance(rho, mu, U, L, yPlus): # Calculation of the size for the size 
 
     return [Re, y]
 
-# calculate number of layers to cover all BL thickness
+# calculate the number of layers to cover all BL thickness
 def number_of_layers(h1, sf, Re, L):
 
     d = L * 0.37 * Re**(-1/5) # estimate of boundary layer thickness
 
-    # estimate number of layers to cover BL delta
-    # from equation H = h1 * (1 - sf**(N-1))/(1 - sf), describing total height of N layers with inflation scaling factor sf,
+    # estimate the number of layers to cover BL delta
+    # from equation H = h1 * (1 - sf**(N-1))/(1 - sf), describing the total height of N layers with inflation scaling factor sf,
     # we derive N setting d = H
     N = mat.ceil(1 + mat.log(1 - d/h1*(1-sf))/mat.log(sf))
 
