@@ -80,10 +80,6 @@ cd ${0%/*} || exit 1    # Run from this directory
 # Source tutorial run functions
 source $WM_PROJECT_DIR/bin/tools/RunFunctions
 
-# decompose the case (number of decompositions is equal to --ntasks)
-runApplication decomposePar
-
-
 echo
 echo "Running case: **$case**";
 echo
@@ -98,14 +94,18 @@ cp -rf $path/cylinder_mesh/0.org $path/$case/0
 rm -rf $path/$case/0/U_*
 
 # run the case
+cd $path/$case
+echo "Start to run the case:"
+echo "   $(pwd)"
+
 if [ $parallel == "not" ]; then
-    bash $path/$case/run_sequential.sh
+    bash run_sequential.sh
 elif [ $parallel == "local" ]; then
-	runApplication decomposePar -case $path/$case
-    bash $path/$case/run_local.sh
+	runApplication decomposePar
+    bash run_local.sh
 else
-	runApplication decomposePar -case $path/$case
-    sbatch $path/$case/run_hpc.sh
+	runApplication decomposePar
+    sbatch run_hpc.sh
 fi
 
 
