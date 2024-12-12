@@ -2,8 +2,8 @@
 #SBATCH --export=ALL,LD_PRELOAD=
 #SBATCH --partition=rome 
 #SBATCH --mem=0
-#SBATCH --ntasks 4
-#SBATCH --ntasks-per-node=4
+#SBATCH --ntasks 8
+#SBATCH --ntasks-per-node=8
 
 # Needed to load OpenFOAM env on the HPC nodes
 module purge
