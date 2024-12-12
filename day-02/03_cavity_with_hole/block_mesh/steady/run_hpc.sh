@@ -5,6 +5,7 @@
 #SBATCH --ntasks 4
 #SBATCH --ntasks-per-node=4
 
+# Needed to load OpenFOAM env on the HPC nodes
 module purge
 module load OpenFOAM
 source $FOAM_BASH
