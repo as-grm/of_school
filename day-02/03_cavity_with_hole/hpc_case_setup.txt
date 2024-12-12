@@ -1,0 +1,12 @@
+To run the GMSH case, the GMSH application should be installed on the system.
+
+There are two ways:
+1. GMSH is part of the module system: ml gmsh (check if it exists: ml av gmsh)
+or
+2. Install local instance:
+  - create local Python env in the same folder as of_shool is
+  - be careful not to be in a collision with the OpenFOAM module loaded Python version
+  - in local Python env install gmsh
+  - after in gmsh/run_all.sh it must include the source of local/bin/activate
+
+!!! The best option is 1. !!!

@@ -77,8 +77,9 @@ source $FOAM_BASH
 # Source tutorial run functions
 source $WM_PROJECT_DIR/bin/tools/RunFunctions
 
-# Source the local Python env for GMSH to work
-source ../../../../local/bin/activate
+# Load GMSH module (your local version of GMSH in local_Python env, must be DEACTIVATED.)
+deactivate
+ml gmsh
 
 
 echo
