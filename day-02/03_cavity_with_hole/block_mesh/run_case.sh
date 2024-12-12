@@ -68,6 +68,14 @@ if [ -z "${case}" ] || [ -z "${parallel}" ] || [ -z "${vel}" ] || [ -z "${radius
     exit 1
 fi
 
+
+# *** Load modules in HPC system ***
+echo "Loading modules ..."
+module purge
+module load OpenFOAM
+source $FOAM_BASH
+
+
 echo
 echo "Running case: **$case**";
 echo
